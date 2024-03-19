@@ -3,6 +3,7 @@ package ru.dolgosheev.spring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.dolgosheev.spring.exception.ResourceNotFoundException;
 import ru.dolgosheev.spring.model.User;
 import ru.dolgosheev.spring.repository.UserRepository;
 
@@ -30,7 +31,7 @@ public class UsersController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public User create(@Valid @RequestBody User user) {
+    public User create(@RequestBody User user) {
         userRepository.save(user);
         return user;
     }
@@ -38,7 +39,8 @@ public class UsersController {
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User show(@PathVariable Long id) {
-        var user = userRepository.findById(id).get();
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id + " Not found!"));
         return user;
     }
 }
