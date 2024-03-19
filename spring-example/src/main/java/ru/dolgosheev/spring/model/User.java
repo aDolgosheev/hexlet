@@ -1,15 +1,26 @@
 package ru.dolgosheev.spring.model;
 
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@Setter
+@Entity
+@Table(name = "users")
 @Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
-    private String id;
-    private String name;
-    private String body;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long id;
+
+    @Column(unique = true)
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
 }
