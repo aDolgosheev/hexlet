@@ -1,0 +1,12 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+user:
+  full-name: Mask Ilonov
+  age: 25
